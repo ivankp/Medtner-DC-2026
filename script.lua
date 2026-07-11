@@ -1,4 +1,7 @@
 function printPar(par)
+  if #par > 0 and string.sub(par[1], 1, 1) ~= ' ' then
+    tex.print('\\noindent')
+  end
   for i = 1, #par do
     if i ~= #par then
       tex.print(par[i]..' \\\\')
@@ -9,11 +12,9 @@ function printPar(par)
 end
 
 local par = { }
-local content = false
 for line in io.lines('text/1-19260424.txt') do
   local page, n1, n2 = line:match('^(%d+)%s+(%d+)_(%d+)$')
   if page ~= nil then
-    content = true
     tex.print(
       '\\vspace{0.5em}', '',
       '\\hfill стр. '..page, '',
@@ -23,11 +24,10 @@ for line in io.lines('text/1-19260424.txt') do
     if line ~= '' then
       table.insert(par, line)
     else
-      if not content then
-        tex.print('\\noindent')
+      if #par > 0 then
+        printPar(par)
+        par = { }
       end
-      printPar(par)
-      par = { }
     end
   end
 end
