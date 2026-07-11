@@ -1,33 +1,34 @@
-local content = false
-local first = true
-for line in io.lines('text/1-19260424.txt') do
-  local page, n1, n2 = line:match('^(%d+)%s+(%d+)_(%d+)$')
-  if not content and page ~= nil then
-    content = true
-    tex.print(
-      '\\hfill стр. '..page, '',
-      '\\hfill{\\ttfamily\\color{gray} '..n1..'\\_'..n2..'}\\vspace{-2\\baselineskip}', ''
-      -- '\\smash{\\begin{minipage}{0.3\\textwidth}',
-      -- '\\hfill стр. '..page, '',
-      -- '\\hfill{\\ttfamily\\color{gray} '..n1..'\\_'..n2..'}',
-      -- '\\end{minipage}}',
-      -- ''
-    )
-  else
-    if line == '' then
-      tex.print('')
+function printPar(par)
+  for i = 1, #par do
+    if i ~= #par then
+      tex.print(par[i]..' \\\\')
     else
-      if content then
-        if first then
-          tex.print(line)
-          first = false
-        else
-          tex.print('\\\\', line)
-        end
-      else
-        tex.print(line, '')
-        first = true
-      end
+      tex.print(par[i], '')
     end
   end
 end
+
+local par = { }
+local content = false
+for line in io.lines('text/1-19260424.txt') do
+  local page, n1, n2 = line:match('^(%d+)%s+(%d+)_(%d+)$')
+  if page ~= nil then
+    content = true
+    tex.print(
+      '\\vspace{0.5em}', '',
+      '\\hfill стр. '..page, '',
+      '\\hfill{\\ttfamily\\color{gray} '..n1..'\\_'..n2..'}\\vspace{-2\\baselineskip}', ''
+    )
+  else
+    if line ~= '' then
+      table.insert(par, line)
+    else
+      if not content then
+        tex.print('\\noindent')
+      end
+      printPar(par)
+      par = { }
+    end
+  end
+end
+printPar(par)
