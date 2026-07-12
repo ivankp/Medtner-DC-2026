@@ -5,7 +5,7 @@
 \RequireLuaTeX
 
 \usepackage{
-  fontspec, xcolor
+  fontspec, xcolor, tocloft
 }
 \usepackage[
   hyperfootnotes=false,
@@ -17,15 +17,62 @@
   urlcolor=blue,
   pdfusetitle,
   pdfsubject={},
-  pdfkeywords={}
+  pdfkeywords={Goedicke, Medtner, Гедике, Метнер}
 ]{hyperref}
 
 % Fonts ------------------------------------------------------------------------
 \setmainfont{Times New Roman}
 
+% Style ------------------------------------------------------------------------
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+% \setcounter{secnumdepth}{0}
+% https://tex.stackexchange.com/a/136531/35990
+
+% Commands ---------------------------------------------------------------------
+\newcounter{letterpage}[section]
+\NewDocumentCommand{\lp}{m}{%
+  \refstepcounter{letterpage}%
+  \vspace{0.5em}%
+  \hfill стр. \arabic{letterpage} {\ttfamily\color{gray} \detokenize{#1}}
+
+  \nobreak%
+}
+
+\NewDocumentCommand{\rem}{sm}{%
+  \IfBooleanTF{#1}
+    {{\color{gray}#2}}
+    {{\color{gray}[#2]}}%
+}
+
+% Title, Authors, Date *********************************************************
+\title{Box 4 Folder 19:\\Письма А. Ф. Гедике Н. К. Метнеру}
+\author{Светлана Алексеевна Погребняк}
+% \date{\today}
+\renewcommand{\contentsname}{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-\directlua{dofile("script.lua")}
+\begin{center}
+  \fontsize{20}{24}\selectfont
+  \makeatletter \@title \makeatother
+
+  \vspace{0.5em}
+  \fontsize{16}{20}\selectfont
+  Текст подготовила \\
+  \makeatletter \@author \makeatother
+\end{center}
+
+\vspace{-2em}
+\tableofcontents
+
+\makeatletter
+\let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip
+\leftskip\z@skip
+\makeatother
+
+% ==============================================================================
+
+\directlua{dofile('letters.lua')}
 
 \end{document}
