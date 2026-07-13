@@ -17,16 +17,11 @@
   urlcolor=blue,
   pdfusetitle,
   pdfsubject={},
-  pdfkeywords={Goedicke, Medtner, Гедике, Метнер}
+  pdfkeywords={Letters, Goedicke, Medtner, Гедике, Метнер}
 ]{hyperref}
 
 % Fonts ------------------------------------------------------------------------
 \setmainfont{Times New Roman}
-
-% Style ------------------------------------------------------------------------
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-% \setcounter{secnumdepth}{0}
-% https://tex.stackexchange.com/a/136531/35990
 
 % Commands ---------------------------------------------------------------------
 \newcounter{letterpage}[section]
@@ -48,7 +43,13 @@
 \title{Box 4 Folder 19:\\Письма А. Ф. Гедике Н. К. Метнеру}
 \author{Светлана Алексеевна Погребняк}
 % \date{\today}
+
+% No title for table of contents
 \renewcommand{\contentsname}{}
+
+% dots for sections in table of contents
+% https://tex.stackexchange.com/a/53901/35990
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -66,6 +67,8 @@
 \vspace{-2em}
 \tableofcontents
 
+% raggedright with paragraph indentation
+% https://tex.stackexchange.com/a/185972/35990
 \makeatletter
 \let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip
 \leftskip\z@skip
