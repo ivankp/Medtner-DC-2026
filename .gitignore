@@ -1,18 +1,3 @@
-/*
-
-!*.pdf
-
-!.gitignore
-!*.tex
-!*.bib
-!*.sty
-!*.cls
-!*.lua
-!*.cfg
-
-!Makefile
-!*.sh
-
-!/fig/
-!/fonts/
-!/letters/
+/All Photos/
+/DC 2026/
+*/Photos/
