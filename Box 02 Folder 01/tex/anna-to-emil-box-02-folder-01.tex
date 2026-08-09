@@ -1,0 +1,81 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{iftex}
+\RequireLuaTeX
+
+\usepackage{
+  fontspec, xcolor, tocloft
+}
+\usepackage[
+  hyperfootnotes=false,
+  pdfpagelabels=false,
+  linktoc=all,
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdfusetitle,
+  pdfsubject={},
+  pdfkeywords={Letters, Anna, Emil, Medtner, Анна, Эмиль, Метнер}
+]{hyperref}
+
+% Fonts ------------------------------------------------------------------------
+\setmainfont{Times New Roman}
+
+% Commands ---------------------------------------------------------------------
+\newcounter{letterpage}[section]
+\NewDocumentCommand{\lp}{m}{%
+  \refstepcounter{letterpage}%
+  \vspace{0.5em}%
+  \hfill стр. \arabic{letterpage} {\ttfamily\color{gray} \detokenize{#1}}
+
+  \nobreak%
+}
+
+\NewDocumentCommand{\rem}{sm}{%
+  \IfBooleanTF{#1}
+    {{\color{gray}#2}}
+    {{\color{gray}[#2]}}%
+}
+
+% Title, Authors, Date *********************************************************
+\title{Box 2 Folder 1:\\Письма Анны Метнер Эмилю Метнеру}
+\author{Светлана Алексеевна Погребняк}
+% \date{\today}
+
+% No title for table of contents
+\renewcommand{\contentsname}{}
+
+% dots for sections in table of contents
+% https://tex.stackexchange.com/a/53901/35990
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{center}
+  \fontsize{20}{24}\selectfont
+  \makeatletter \@title \makeatother
+
+  \vspace{0.5em}
+  \fontsize{16}{20}\selectfont
+  Текст подготовила \\
+  \makeatletter \@author \makeatother
+\end{center}
+
+\vspace{-2em}
+\tableofcontents
+
+% raggedright with paragraph indentation
+% https://tex.stackexchange.com/a/185972/35990
+\makeatletter
+\let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip
+\leftskip\z@skip
+\makeatother
+
+% ==============================================================================
+
+\directlua{dofile('letters.lua')}
+
+\end{document}
