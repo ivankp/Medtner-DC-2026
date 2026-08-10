@@ -25,10 +25,16 @@
 
 % Commands ---------------------------------------------------------------------
 \newcounter{letterpage}[section]
-\NewDocumentCommand{\lp}{m}{%
-  \refstepcounter{letterpage}%
+\NewDocumentCommand{\lp}{om}{%
   \vspace{0.5em}%
-  \hfill стр. \arabic{letterpage} {\ttfamily\color{gray} \detokenize{#1}}
+  \hfill%
+  \IfValueTF{#1}{%
+    {#1}
+  }{%
+    \refstepcounter{letterpage}%
+    стр. \arabic{letterpage}%
+  }%
+  \ {\ttfamily\color{gray} \detokenize{#2}}
 
   \nobreak%
 }
